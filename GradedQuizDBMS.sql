@@ -1,7 +1,5 @@
 CREATE database TravelTheGo;
 use TravelTheGo;
-SET FOREIGN_KEY_CHECKS = 1;
-
 
 CREATE TABLE IF NOT EXISTS `PASSENGER` (
 `PassengerID` INT NOT NULL AUTO_INCREMENT ,
@@ -38,7 +36,7 @@ insert into `PRICE` (Bus_Type, Distance, Price, Boarding_City, Destination_City,
 insert into `PRICE` (Bus_Type, Distance, Price, Boarding_City, Destination_City, PassengerID) values ("Sitting",1000,1240,"null","null",null);
 insert into `PRICE` (Bus_Type, Distance, Price, Boarding_City, Destination_City, PassengerID) values ("Sitting",1200,1488,"null","null",null);
 insert into `PRICE` (Bus_Type, Distance, Price, Boarding_City, Destination_City, PassengerID) values ("Sitting",1500,1860,"null","null",null);
-insert into `PRICE` (Bus_Type, Distance, Price, Boarding_City, Destination_City, PassengerID) values ("Sitting",1500,null,"Chennai","Mumbai",4);
+insert into `PRICE` (Bus_Type, Distance, Price, Boarding_City, Destination_City, PassengerID) values ("Sleeper",1500,null,"Chennai","Mumbai",4);
 
 
 insert into `Passenger` (Passenger_Name, Category, Gender) values ("Sejal", "AC","F");
@@ -70,7 +68,7 @@ select p.Passenger_Name, pr.Boarding_city, pr.Destination_city, pr.bus_type, pr.
 
 -- 7) What is the passenger name and his/her ticket price who travelled in Sitting bus for a
 distance of 1000 KM s
-select p.passenger_name , pr.price from passenger as p inner join price as pr on p.PassengerID=pr.PassengerID where pr.distance=1000 and pr.bus_type='sleeper';
+select p.passenger_name , pr.price from passenger as p inner join price as pr on p.PassengerID=pr.PassengerID where pr.distance=1000 and pr.bus_type='Sitting';
 
 -- 8) What will be the Sitting and Sleeper bus charge for Pallavi to travel from Bangalore to
 -- Panaji?
@@ -84,7 +82,7 @@ select distinct(pr.distance) from passenger as p inner join price as pr on p.Pas
 -- 10) Display the passenger name and percentage of distance travelled by that passenger
 -- from the total distance travelled by all passengers without using user variables
 
-select passenger_name, pr.distance*100/d.sumpp from passenger as p inner join (select sum(distance) as sumpp from price) as d
+select passenger_name, pr.distance*100/d.sumpp as percent from passenger as p inner join (select sum(distance) as sumpp from price) as d
 inner join price as pr on p.PassengerID=pr.PassengerID group by pr.passengerid;
 
 -- 11) Display the distance, price in three categories in table Price
